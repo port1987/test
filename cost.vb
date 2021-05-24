@@ -68,11 +68,11 @@ Private Sub cmd_exl_exp_Click()
         'testDB分
         rownum = rownum + 3
         stsql = ""
-        stsql = stsql & "SELECT maindbt_i16_mlit.i16_center_cd AS 会場コード, Count(maindbt_i16_mlit.i16_req_dt) AS 件数 "
-        stsql = stsql & "FROM maindbt_i16_mlit "
-        stsql = stsql & "WHERE (((maindbt_i16_mlit.i16_req_dt) Between ( '" & from_ym & "01') And ('" & from_ym & "31') "
-        stsql = stsql & "And (maindbt_i16_mlit.i16_length > '1'))) "
-        stsql = stsql & "GROUP BY maindbt_i16_mlit.i16_center_cd "
+            stsql = stsql & "SELECT tstdbt_i16_mlit.i16_center_cd AS 会場コード, Count(tstdbt_i16_mlit.i16_req_dt) AS 件数 "
+            stsql = stsql & "FROM tstdbt_i16_mlit "
+            stsql = stsql & "WHERE (((tstdbt_i16_mlit.i16_req_dt) Between ( '" & from_ym & "01') And ('" & from_ym & "31') "
+            stsql = stsql & "And (tstdbt_i16_mlit.i16_length > '1'))) "
+            stsql = stsql & "GROUP BY tstdbt_i16_mlit.i16_center_cd "
 
         If SETKENSU(stsql, oxls, DB, rownum, colnum) = True And tstChk = 0 Then
             tstChk = tstChk + 1
@@ -135,7 +135,7 @@ Private Sub cmd_exl_exp_Click()
 
 End Sub
 
-Private Function SETNUM(ByVal stsql As String, ByVal oxls As Object, ByVal DB As Database, ByVal rownum As Integer, ByVal colnum As Integer) As Boolean
+    Private Function SETNUM(ByVal stsql As String, ByVal oxls As Object, ByVal db As Database, ByVal rownum As Integer, ByVal colnum As Integer) As Boolean
     Dim rs As Recordset
 
     rs = DB.OpenRecordset(stsql)
