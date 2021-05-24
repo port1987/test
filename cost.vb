@@ -42,56 +42,56 @@ Private Sub cmd_exl_exp_Click()
     oxls = CreateObject("Excel.application")
     oxls.Visible = True
     oxls.workbooks.Open(FileName:="c:\MAINEXE\mlit.xltx")
-
-    '列を挿入する
-    Do Until (months = i)
-        oxls.worksheets("mlit").Columns("E").Insert()
-        oxls.worksheets("mlit").Columns(13 + i).Insert()
-        i = i + 1
-    Loop
-
-    '月ごとに各会場に件数を挿入
-    Do Until (from_ym > to_ym)
-        'mainDB分
-        rownum = 18
-        stsql = ""
-        stsql = stsql & "SELECT maindbt_i16_mlit1.i16_center_cd AS 支店コード, Count(maindbt_i16_mlit1.i16_req_dt) AS 件数 "
-        stsql = stsql & "FROM maindbt_i16_mlit1 "
-        stsql = stsql & "WHERE (((maindbt_i16_mlit1.i16_req_dt) Between ( '" & from_ym & "01') And ('" & from_ym & "31') "
-        stsql = stsql & "And (maindbt_i16_mlit1.i16_length > '1'))) "
-        stsql = stsql & "GROUP BY maindbt_i16_mlit1.i16_center_cd "
-
-        If SETNUM(stsql, oxls, DB, rownum, colnum) = True And mainChk = 0 Then
-            mainChk = mainChk + 1
-        End If
-
-        'testDB分
-        rownum = rownum + 3
-        stsql = ""
-            stsql = stsql & "SELECT tstdbt_i16_mlit.i16_center_cd AS 会場コード, Count(tstdbt_i16_mlit.i16_req_dt) AS 件数 "
-            stsql = stsql & "FROM tstdbt_i16_mlit "
-            stsql = stsql & "WHERE (((tstdbt_i16_mlit.i16_req_dt) Between ( '" & from_ym & "01') And ('" & from_ym & "31') "
-            stsql = stsql & "And (tstdbt_i16_mlit.i16_length > '1'))) "
-            stsql = stsql & "GROUP BY tstdbt_i16_mlit.i16_center_cd "
-
-        If SETNUM(stsql, oxls, DB, rownum, colnum) = True And tstChk = 0 Then
-            tstChk = tstChk + 1
-        End If
-
-        '来年以降にまたがる場合の処理
-        If Right(from_ym, 2) = 12 Then
-            from_ym = from_ym + 89
-        Else
-            from_ym = from_ym + 1
-        End If
-        colnum = colnum + 1
-    Loop
-
-    rownum = 3
-    colnum = months + 4
-
-    to_ym = Right(to_ym, 2)
+        
     With oxls.worksheets("mlit")
+        '列を挿入する
+        Do Until (months = i)
+            .Columns("E").Insert()
+            .Columns(13 + i).Insert()
+            i = i + 1
+        Loop
+
+        '月ごとに各会場に件数を挿入
+        Do Until (from_ym > to_ym)
+            'mainDB分
+            rownum = 18
+            stsql = ""
+            stsql = stsql & "SELECT maindbt_i16_mlit1.i16_center_cd AS 支店コード, Count(maindbt_i16_mlit1.i16_req_dt) AS 件数 "
+            stsql = stsql & "FROM maindbt_i16_mlit1 "
+            stsql = stsql & "WHERE (((maindbt_i16_mlit1.i16_req_dt) Between ( '" & from_ym & "01') And ('" & from_ym & "31') "
+            stsql = stsql & "And (maindbt_i16_mlit1.i16_length > '1'))) "
+            stsql = stsql & "GROUP BY maindbt_i16_mlit1.i16_center_cd "
+
+            If SETNUM(stsql, oxls, DB, rownum, colnum) = True And mainChk = 0 Then
+                mainChk = mainChk + 1
+            End If
+
+            'testDB分
+            rownum = rownum + 3
+            stsql = ""
+                stsql = stsql & "SELECT tstdbt_i16_mlit.i16_center_cd AS 会場コード, Count(tstdbt_i16_mlit.i16_req_dt) AS 件数 "
+                stsql = stsql & "FROM tstdbt_i16_mlit "
+                stsql = stsql & "WHERE (((tstdbt_i16_mlit.i16_req_dt) Between ( '" & from_ym & "01') And ('" & from_ym & "31') "
+                stsql = stsql & "And (tstdbt_i16_mlit.i16_length > '1'))) "
+                stsql = stsql & "GROUP BY tstdbt_i16_mlit.i16_center_cd "
+
+            If SETNUM(stsql, oxls, DB, rownum, colnum) = True And tstChk = 0 Then
+                tstChk = tstChk + 1
+            End If
+
+            '来年以降にまたがる場合の処理
+            If Right(from_ym, 2) = 12 Then
+                from_ym = from_ym + 89
+            Else
+                from_ym = from_ym + 1
+            End If
+            colnum = colnum + 1
+        Loop
+
+        rownum = 3
+        colnum = months + 4
+        to_ym = Right(to_ym, 2)
+        
         .Cells(rownum, colnum).Value = to_ym & "月"
         .Cells((rownum + 14), colnum).Value = to_ym & "月"
         .Cells((rownum + 1), (months * 2 + 11)).Value = to_ym & "月"
@@ -119,7 +119,7 @@ Private Sub cmd_exl_exp_Click()
             Loop
         End If
 
-        .Range("B2").Value = "mlit　支店別費用配布 " & [Forms]![form1]![txt_from_ym] & " ～ " & [Forms]![form1]![txt_to_ym] & " 分"
+        .Range("B2").Value = "AIRIS　支店別費用配布 " & [Forms]![form1]![txt_from_ym] & " ～ " & [Forms]![form1]![txt_to_ym] & " 分"
 
         .Columns("D").Delete()
         .Columns(10 + months).Delete()
@@ -135,7 +135,7 @@ Private Sub cmd_exl_exp_Click()
 
 End Sub
 
-    Private Function SETNUM(ByVal stsql As String, ByVal oxls As Object, ByVal db As Database, ByVal rownum As Integer, ByVal colnum As Integer) As Boolean
+Private Function SETNUM(ByVal stsql As String, ByVal oxls As Object, ByVal db As Database, ByVal rownum As Integer, ByVal colnum As Integer) As Boolean
     Dim rs As Recordset
 
     rs = DB.OpenRecordset(stsql)
