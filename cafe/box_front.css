@@ -1,0 +1,196 @@
+﻿@charset "utf-8";
+/* 初期化 */
+aside, div {
+	position:relative;
+}
+header, main, footer, aside {
+	overflow:hidden;
+}
+/* ページ背景 */
+body {
+	background-image:url("../images/shop.svg");
+	background-size:auto 85vh;
+	background-repeat:no-repeat;
+}
+/* 5つの円 */
+*[id^="item"]:not(main), #item2 > section > h2 > a {	/* #item2はmain要素だが、実際に円として表示させるものはmain要素直下section要素直下h2要素直下のa要素 */
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	position:absolute;
+	overflow:hidden;
+	width:30vh;
+	height:30vh;
+	margin:0px;
+	border-radius:30vh;
+	border:1px solid hsl(20,80%,20%);
+	background-color:rgba(255,255,255,0.8);
+	box-shadow:
+		inset 0px 0px 4px 0px rgba(0,0,0,0.4),
+		inset 0px 0px 8px 0px rgba(0,0,0,0.2),
+		inset 0px 0px 16px 8px rgba(255,255,255,0.9);
+	text-shadow:
+		0px 0px 2px rgb(255,255,255),
+		0px 0px 4px rgb(255,255,255),
+		0px 0px 16px rgb(255,255,255),
+		0px 0px 32px rgb(255,255,255);
+	font-size:calc(30vh / 12);
+	font-weight:bold;
+	letter-spacing:-0.08em;
+}
+#item1 {
+	left:calc((100vw - 30vh) / 2);
+	top:calc((85vh - 30vh) / 2);
+}
+#item2 > section > h2 > a {
+	left:calc(((100vw - 30vh) / 2) - 30vh + 4vh);
+	top:5vh;
+}
+	/* #item2関連指定 */
+	#item2 > section > h2 ~ *  {
+		display:none;	/* 主内容のh2要素以降のすべての要素を非表示にする */
+	}
+	#item2 > section > h2 span {
+		font-size:1.15em;
+		letter-spacing:0em;
+	}
+		/* item2クリック時の表示切り替え */
+		#item2:target {
+			position:relative;
+			top:-1rem;
+			padding:4rem calc((100vw - 960px - 16px) / 2) 16rem;	/* IEでは100vwを100%にすると、ブラウザーに横スクロールバーが表示されてしまう。ただし、100vwの場合はスクロールバー表示領域も含めた幅であることに留意 */
+			background-color:rgb(255,255,255);
+		}
+		#item2:target > section > h2 a {
+			position:static;	/* 「*[id^="item"]:not(main), #item2 > section > h2 > a」でのposition:absolute指定を変更する */
+			width:480px;
+			height:480px;
+			border-radius:480px;
+			color:rgb(64,64,64);
+			font-size:calc(480px / 12);
+			text-decoration:none;
+			cursor:default;
+		}
+		#item2:target > section > h2 ~ * {
+			display:block;	/* 「#item2 > section > h2 ~ *」で非表示にしている主内容のh2要素以降のすべての要素を、:targetで表示させる */
+		}
+#item3 {
+	left:calc(((100vw - 30vh) / 2) - 30vh + 4vh);
+	bottom:20vh;
+}
+#item4 {
+	right:calc(((100vw - 30vh) / 2) - 30vh + 4vh);
+	top:5vh;
+}
+#item5 {
+	right:calc(((100vw - 30vh) / 2) - 30vh + 4vh);
+	bottom:20vh;
+}
+/* ページフッタ */
+body > footer {
+	position:absolute;
+	top:85vh;
+	width:100%;
+	height:15vh;
+	overflow-y:auto;
+}
+body > footer > ul > li:first-of-type {
+	display:none;
+}
+	/* item2クリック時の表示切り替え */
+	#item2:target + footer {
+		position:relative;
+		top:-1rem;
+		height:auto;
+	}
+	#item2:target + footer > ul > li:first-of-type {
+		display:list-item;
+	}
+/* Media Query */
+	/* 縦長画面 */
+	@media screen and (orientation:portrait) {
+		*[id^="item"]:not(main), #item2 > section > h2 > a{
+			width:30vw;
+			height:30vw;
+			border-radius:30vw;
+			font-size:calc(30vw / 12);
+		}
+		#item1 {
+			left:calc((100vw - 30vw) / 2);
+			top:calc((85vh - 30vw) / 2);
+		}
+		#item2 > section > h2 > a {
+			left:15vw;
+			top:calc(((85vh - 30vw) / 2) - 25vw);
+		}
+		#item3 {
+			left:15vw;
+			top:calc(((85vh - 30vw) / 2) + 25vw);
+		}
+		#item4 {
+			right:15vw;
+			top:calc(((85vh - 30vw) / 2) - 25vw);
+		}
+		#item5 {
+			right:15vw;
+			top:calc(((85vh - 30vw) / 2) + 25vw);
+		}
+	}
+	/* 画面幅1120px以下 */
+	@media screen and (max-width:1120px) {
+		#item2:target {
+			padding-left:2rem;
+			padding-right:2rem;
+		}
+		#item2:target > section > h2 > a  {
+			width:40vw;
+			height:40vw;
+			border-radius:40vw;
+			font-size:calc(40vw / 12);
+		}
+	}
+	/* 画面幅388px以下 */
+	@media screen and (max-width:388px) {
+		#item2:target {
+			padding-left:1rem;
+			padding-right:1rem;
+		}
+		body > footer {
+			font-size:0.6em;
+		}
+	}
+	/* 画面高さ344px以下 */
+	@media screen and (max-height:344px) {
+		body {
+			background-size:auto 344px;
+		}
+		*[id^="item"]:not(main), #item2 > section > h2 > a {
+			top:52px;
+			width:240px;
+			height:240px;
+			border-radius:240px;
+			font-size:calc(240px / 12);
+		}
+		#item1 {
+			left:15vw;
+			top:52px;
+		}
+		#item2 > section > h2 > a {
+			left:calc(15vw + 240px + 1rem);
+		}
+		#item3 {
+			left:calc(15vw + 480px + 2rem);
+		}
+		#item4 {
+			left:calc(15vw + 720px + 3rem);
+			top:52px;
+		}
+		#item5 {
+			left:calc(15vw + 960px + 4rem);
+		}
+		body > footer {
+			top:344px;
+			width:100%;
+			height:auto;
+		}
+	}

@@ -1,0 +1,500 @@
+﻿@charset "utf-8";
+/* 初期化 */
+header, main, footer, section, article, aside, div {
+	position:relative;
+	overflow:hidden;
+}
+/* 共通ボックス構成 */
+	/* ページヘッダ */
+	body > header {
+		height:64px;
+		overflow:visible;
+		background-color:rgb(255,255,255);
+		background-color:hsl(40,40%,90%);
+		z-index:1;
+		overflow:visible;
+		text-align:center;
+	}
+	body > header h1 {
+		padding:0.25rem 1rem;
+		background-color:hsl(40,40%,80%);
+		text-align:right;
+	}
+	body > header nav ul {
+		position:absolute;
+		top:64px;
+		right:16px;
+		display:flex;
+		list-style:none;
+	}
+	body > header nav li {
+		width:calc((100vw - 16px - (((100vw - 960px - 16px) / 2) + 480px) - 4em) / 4);
+		max-width:160px;
+		height:calc((100vw - 16px - (((100vw - 960px - 16px) / 2) + 480px) - 4em) / 4);
+		max-height:160px;
+		margin-left:1em;
+	}
+	body > header nav li a {
+		display:flex;
+		justify-content:center;
+		align-items:center;
+		width:100%;
+		height:100%;
+		padding-left:0.5em;
+		padding-right:0.5em;
+		border-radius:100%;
+		border:1px solid hsl(20,80%,20%);
+		background-color:rgb(255,255,255);
+		overflow:hidden;
+		font-size:0.9em;
+		font-weight:bold;
+		letter-spacing:-0.1em;
+		transition-property:border-color, background-color, color;
+		transition-duration:0.5s;
+	}
+	body > header a:hover, body > header a:focus {
+		border-color:hsl(20,80%,40%);
+		background-color:hsl(40,40%,90%);
+	}
+	/* メイン */
+	main {
+		padding:0rem calc((100vw - 960px - 16px) / 2)  384px;	/* ページ幅の単位に％ではなくvwを使用しないと、IEではレスポンシブで大画面に戻るときにレイアウトが崩れる。ただし、100vwの場合はスクロールバー表示領域も含めた幅であることに留意 */
+		background-color:rgb(255,255,255);
+		background-image:
+			url("../images/shop.svg"),
+			linear-gradient(
+				to bottom,
+				hsl(40,40%,90%) 32px,
+				rgb(255,255,255) 32px
+			);
+		background-repeat:no-repeat;
+		background-size:auto 512px, auto;
+		background-position:left bottom, center top;
+	}
+	main > section {
+		overflow:visible;
+	}
+	main > section > h2 {
+		display:flex;
+		justify-content:center;
+		align-items:center;
+		position:relative;
+		width:480px;
+		height:480px;
+		border-radius:480px;
+		border:1px solid hsl(20,80%,20%);
+		background-color:rgb(255,255,255);
+		box-shadow:
+			inset 0px 0px 4px 0px rgba(0,0,0,0.4),
+			inset 0px 0px 8px 0px rgba(0,0,0,0.2);
+		overflow:hidden;
+		font-size:calc(480px / 12);
+		line-height:1.2em;
+		letter-spacing:-0.05em;
+		text-align:center;
+	}
+	@media screen and (max-width:1024px) {
+		main > section > h2 {
+			width:40vw;
+			min-width:160px;
+			height:40vw;
+			min-height:160px;
+			border-radius:40vw;
+			font-size:calc(40vw / 12);
+		}
+	}
+	@media screen and (max-width:388px) {
+		main > section > h2 {
+			font-size:0.9rem;
+		}
+	}
+/* 個別ページ */
+	/* 月間専用（monthly） */
+	body.monthly main > section > aside ul {
+		display:flex;
+		flex-flow:row wrap;
+		justify-content:space-between;
+		margin-left:0px;
+		list-style:none;
+	}
+	body.monthly main > section > aside li {
+		width:8em;
+		height:8em;
+		margin-bottom:1em;
+	}
+	body.monthly main > section > aside li a {
+		display:flex;
+		justify-content:center;
+		align-items:center;
+		width:100%;
+		height:100%;
+		border:1px solid hsl(20,80%,20%);
+		border-radius:100%;
+	}
+	body.monthly main > section > aside li a:hover, body.monthly main > section > aside li a:focus {
+		border:1px solid hsl(20,80%,40%);
+		background-color:hsl(40,40%,90%);
+	}
+	/* バックナンバー専用（backnumbers） */
+	body.backnumbers > header::before {
+		display:block;
+		position:absolute;
+		left:1rem;
+		top:0.7rem;
+		padding:0.25em 1.5em;
+		border-radius:2rem;
+		background-color:hsl(20,80%,20%);
+		color:rgb(255,255,255);
+		content:"バックナンバー";
+		font-family:Meiryo, sans-serif;
+		font-size:0.9em;
+		font-weight:bold;
+	}
+	body.backnumbers main > section > aside li:last-child a {
+		background-color:hsl(40,40%,90%);
+	}
+	/* カラム構成専用（column） */
+		/* 3段組ボックス全体枠（div要素）。ドリンク、フード、デザートの各メニュー（article要素）を囲む */
+		body.column main > section > div {
+			display:flex;
+			align-content:flex-start;
+			margin-top:8rem;
+		}
+		/* ドリンク、フード、デザートの各メニュー（article要素、見出し3レベル。:targetを利用して、表示を切り替える） */
+		body.column main > section > div > article {
+			flex-flow:row wrap;
+			align-content:flex-start;
+			flex-shrink:0;
+			width:100%;
+		}
+		/* ①メニュー（article要素、見出し3レベル）を一括して非表示 */
+		body.column main > section > div > article {
+			display:none;
+		}
+		/* ②そのうえで、:ドリンクメニュー（article要素、見出し3レベルの3個目）を表示し、order:-1としてフレックスラインの先頭へ移動 */
+		body.column main > section > div > article:last-of-type {
+			display:flex;
+			order:-1;	/* メニュー（article要素）自体のdisplayプロパティを制御しているため、orderは不要のようだが、ブラウザーによってはorderの指定が無いとウインドウサイズの変更等に追随できない場合がある */
+		}
+		/* メニュー内header要素は非表示 */
+		body.column main > section > div > article > header {
+			display:none;
+		}
+		/* タブ構造体を配置してあるメニュー内footer要素の幅は100％、フレックスラインの先頭で表示 */
+		body.column main > section > div > article > footer {
+			width:100%;
+			order:-1;
+		}
+		/* 切り替えタブの構成 */
+			/* 切り替えタブ構造（ul要素） */
+			body.column main > section > div > article > footer > ul {
+				display:flex;
+				flex-direction:row-reverse;
+				list-style:none;
+				margin-left:0px;
+				margin-bottom:0px;
+				font-size:1.5em;
+				font-weight:bold;
+			}
+			/* 切り替えタブ構造（li要素） */
+			body.column main > section > div > article > footer > ul > li {
+				width:100%;
+				height:2em;
+				margin-bottom:0px;
+				padding-left:0.5rem;
+				padding-right:0.5rem;
+				border-top:1px solid hsl(40,40%,80%);
+				border-right:1px solid hsl(40,40%,80%);
+				border-bottom:1px solid hsl(40,40%,80%);
+				overflow:hidden;
+			}
+			/* 先頭のli要素（表示上は末尾）の設定。右上に角丸を適用 */
+			body.column main > section > div > article > footer > ul > li:first-child {
+				border-top-right-radius:8px;
+			}
+			/* 末尾のli要素（表示上は先頭）の設定。左辺の枠線、左上に角丸、下辺の枠線削除、背景グラデーションを適用 */
+			body.column main > section > div > article > footer > ul > li:last-child {
+				border-left:1px solid hsl(40,40%,80%);
+				border-top-left-radius:8px;
+				border-bottom:none;
+				background-image:linear-gradient(
+					to bottom,
+					hsl(40,40%,90%) -50%,
+					hsl(40,0%,100%) 75%
+				);
+			}
+			/* 切り替えタブ構造（a要素） */
+			body.column main > section > div > article > footer > ul > li a {
+				display:inline-flex;	/* ブロックレベル表示のflexにすると、MS EdgeHTML 17.17134で配置がずれる */
+				align-items:center;
+				width:100%;
+				height:100%;
+			}
+		/* :targetによる表示制御 */
+			/*:target時、選択したメニュー（article要素、見出し3レベル）をdisplay:flexとして表示、フレックスラインの先頭へ移動 */
+			body.column main > section > div > article:target {
+				display:flex;
+				order:-1;
+			}
+			/* :target時、選択したメニューより後ろのarticle要素を非表示 */
+			body.column main > section > div > article:target ~ article {
+				display:none;
+			}
+			/* ターゲット選択時、末尾のli要素（表示上は先頭）に下辺を適用、背景グラデーションを削除 */
+			body.column main > section > div > article:target > footer > ul > li:last-child {
+				border-bottom:1px solid hsl(40,40%,80%);
+				background-image:none;
+			}
+			/* 特定のターゲット選択時、選択メニューに該当するli要素から下辺を削除、背景グラデーションを適用 */
+			body.column main > section > div > article#item3:target > footer > ul > li:nth-child(3),
+			body.column main > section > div > article#item2:target > footer > ul > li:nth-child(2),
+			body.column main > section > div > article#item1:target > footer > ul > li:nth-child(1) {
+				border-bottom:none;
+				background-image:linear-gradient(
+					to bottom,
+					hsl(40,40%,90%) -50%,
+					hsl(40,0%,100%) 75%
+				);
+			}
+		/* メニュー内のsection要素。各メニュー内のサブメニュー（見出し4レベル） */
+		body.column main > section > div > article > section {
+			display:flex;
+			flex-flow:row wrap;
+			width:100%;
+			padding:1rem;
+			border-left:1px solid hsl(40,40%,80%);
+			border-right:1px solid hsl(40,40%,80%);
+		}
+		body.column main > section > div > article > section:last-of-type {
+			border-bottom:1px solid hsl(40,40%,80%);
+			border-radius:0px 0px 8px 8px;
+		}
+		body.column main > section > div > article > section > h4 {
+			width:100%;
+		}
+		body.column main > section > div > article > section > dl {
+			width:100%;
+			/*margin-left:0em;*/
+		}
+		/* サブメニュー内の個別メニュー記事（article要素。見出し5レベル） */
+		body.column main > section > div > article > section > article {
+			width:calc((100% - 1.01rem) / 3);
+			margin-bottom:1rem;
+			padding:0.5rem;
+			border:1px solid hsl(40,40%,90%);
+			border-radius:4px;
+			background-color:rgb(255,255,255);
+			background-image:linear-gradient(
+				to top,
+				hsl(40,40%,90%) -50%,
+				hsl(40,0%,100%) 15%
+			);
+		}
+		body.column main > section > div > article > section > article:not(:nth-of-type(3n+1)) {
+			margin-left:0.5rem;
+		}
+		body.column main > section > div > article > section > article h5 {
+			font-size:0.8em;
+			line-height:1.5em;
+			letter-spacing:-0.09em;
+			text-indent:-1.25em;
+		}
+		body.column main > section > div > article > section > article h5::first-line {
+			font-size:1.25em;
+		}
+		body.column main > section > div > article > section > article h5 span {
+			position:relative;
+			display:block;
+			width:128px;
+			height:128px;
+			border:1px solid hsl(40,40%,80%);
+			border-radius:128px;
+			overflow:hidden;
+			float:left;
+			margin-right:0.25rem;
+			margin-bottom:0.5em;
+		}
+		body.column main > section > div > article > section > article img {
+			position:relative;
+			left:1.25em;
+			width:100%;
+			height:auto;
+			padding:0px;
+		}
+		body.column main > section > div > article > section > article span + br {
+			display:none;
+		}
+		body.column main > section > div > article > section > article ul {
+			list-style:none;
+			margin-left:0px;
+		}
+		body.column main > section > div > article > section > article ul li:first-child {
+			margin-bottom:1em;
+			padding:0.1em 1em;
+			border-bottom:1px solid hsl(40,40%,80%);
+			font-family:Meiryo, sans-serif;
+			font-size:0.9em;
+			text-align:right;
+		}
+
+	/* ドキュメント専用（document） */
+	body.document main > section > div {
+		column-count:2;
+		column-gap:4em;
+		column-rule:1px dotted hsl(20,80%,20%);
+	}
+	body.document main > section > div > * {
+		overflow:visible;
+	}
+	.break_before {
+		break-before:column;
+	}
+	body.document main h3 {
+		position:relative;
+		margin-top:1em;
+	}
+	body.document main h3::before {
+		content:"";
+		display:block;
+		position:absolute;
+		left:0px;
+		bottom:0px;
+		width:100%;
+		height:1px;
+		background-image:linear-gradient(
+			to right,
+			hsl(20,80%,20%) 0%,
+			hsl(20,0%,100%) 95%
+		);
+	}
+	/* 特定商取引専用（rule） */
+	body.rule main dt {
+		display:block;
+	}
+	body.rule main > section > dl {
+		margin-top:2em;
+	}
+	body.rule main > section > dl > dt {
+		width:15em;
+	}
+	body.rule main > section > dl > dt::before {
+		content:"【";
+	}
+	body.rule main > section > dl > dt::after {
+		content:"】";
+	}
+	body.rule main > section > dl >  dd {
+		margin-left:16em;
+	}
+	body.rule main > section > dl >  dd > dl {
+		margin-left:0em;
+		margin-bottom:2em;
+	}
+	body.rule main > section > dl >  dd > dl > dt {
+		width:5em;
+		font-weight:normal;
+	}
+	body.rule main > section > dl >  dd > dl > dd {
+		margin-left:6em;
+	}
+
+/* Media Query */
+	/* 画面幅1120px以下 */
+	@media screen and (max-width:1120px) {
+		body > header nav ul {
+			right:0px;
+			width:calc(60vw - 3rem);
+			flex-flow:row wrap;
+			justify-content:flex-end;
+			flex-shrink:0;
+		}
+		body > header nav li {
+			width:100%;
+			max-width:none;
+			height:2em;
+			max-height:none;
+			margin-bottom:0.5em;
+		}
+		body > header nav li:nth-child(2) {
+			width:88%;
+		}
+		body > header nav li:nth-child(3) {
+			width:86%;
+		}
+		body > header nav li:nth-child(4) {
+			width:88%;
+		}
+		body > header nav li a {
+			justify-content:flex-end;
+			border-right:none;
+			border-radius:2em 0px 0px 2em;
+			padding-left:0em;
+			padding-right:0.5em;
+		}
+		main {
+			padding:0rem 2rem 384px;
+		}
+		/* 個別ページ */
+			/* カラム構成専用 */
+			body.column main > section > div > article > section > article {
+				width:100%;
+			}
+			body.column main > section > div > article > section > article:not(:nth-of-type(3n+1)) {
+				margin-left:0rem;
+			}
+			body.column main > section > div > article > footer > ul {
+				font-size:1.2em;
+			}
+			/* ドキュメント専用 */
+			body.document main > section > div {
+				column-count:auto;
+			}
+			.break_before {
+				break-before:auto;
+			}
+			/* 特定商取引専用 */
+			body.rule main > section > dl > dt {
+				width:auto;
+				float:none;
+			}
+			body.rule main > section > dl > dd {
+				margin-left:0.5em;
+			}
+			body.rule main > section > dl > dd > dl {
+				margin-left:0em;
+			}
+			body.rule main > section > dl > dd > dl > dt {
+				width:4em;
+				list-style:none;
+			}
+			body.rule main > section > dl > dd > dl > dd {
+				margin-left:5em;
+			}
+	}
+	/* 画面幅388px以下 */
+	@media screen and (max-width:388px) {
+		body > header {
+			height:auto;
+		}
+		body > header nav ul {
+			position:static;
+			width:100%;
+			margin-bottom:0px;
+		}
+		body > header nav li{
+			width:100% !important;
+			margin-left:0px;
+		}
+		body > header nav li a {
+			border-left:none;
+			border-radius:0px;
+		}
+		main {
+			padding:0rem 1rem 384px;
+		}
+		/* 個別ページ */
+			/* カラム構成専用 */
+			body.column main > section > div > article > footer > ul {
+				font-size:1.1em;
+			}
+	}

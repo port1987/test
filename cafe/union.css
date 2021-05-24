@@ -1,0 +1,340 @@
+﻿@charset "utf-8";
+/*
+背景色（濃）	hsl(40,40%,80%)
+背景色（淡）	hsl(40,40%,90%)
+前景色		rgb(64,64,64)
+強調色1		hsl(20,80%,20%)
+強調色2		hsl(20,80%,40%)
+*/
+
+/* general */
+* {
+	margin: 0px;
+	padding: 0px;
+	box-sizing:border-box;
+}
+:root {
+	color:rgb(64,64,64);
+	font-family:Corbel, "BIZ UDGothic", Meiryo, sans-serif;
+	font-size:16px;
+	line-height:1em;
+}
+	/* デバイスピクセル比1.25倍以上 */
+	@media screen and (min-resolution:1.25dppx) {
+		:root {
+			font-size:18px;
+		}
+	}
+body {
+	background-color:hsl(40,40%,80%);
+}
+h1 {
+	font-size:1.8em;
+	line-height:1.2em;
+}
+h2 {
+	line-height:1.2em;
+	letter-spacing:-0.05em;
+	text-align:center;
+}
+nav h2, nav h3 {
+	display:none;
+}
+h3 {
+	margin-top:6em;
+	padding-bottom:4px;
+	color:hsl(20,80%,20%);
+	font-size:1.6em;
+	line-height:1.6em;
+	letter-spacing:-0.05em;
+}
+h4 {
+	margin-top:1em;
+	font-size:1.4em;
+	line-height:1.2em;
+}
+h5 {
+	margin-top:1em;
+	font-size:1.2em;
+	line-height:1.2em;
+}
+p {
+	margin-top:0.5em;
+	margin-bottom:1em;
+	font-size:1em;
+	line-height:1.8em;
+}
+h2 + p {
+	margin-bottom:2em;
+	font-size:1.4em;
+	font-weight:bold;
+	line-height:1.6em;
+	letter-spacing:-0.05em;
+}
+ul, ol, dl {
+	margin-left:2em;
+	margin-top:0.5em;
+	margin-bottom:1em;
+	font-size:1em;
+	line-height:1.3em;
+}
+li, dd {
+	margin-bottom:0.5em;
+}
+dt {
+	display:list-item;
+	margin-right:0.25em;
+	float:left;
+	font-weight:bold;
+}
+dt::after {
+	content:":";
+}
+section {
+	text-align:justify;
+	text-justify:distribute;
+}
+aside {
+	font-size:0.9em;
+}
+nav ul, footer ul {
+	margin-left:0px;
+	list-style:none;
+}
+blockquote::before, blockquote::after {
+	font-family:"Yu Mincho", YuMincho, serif;
+	font-size:2em;
+}
+blockquote::before {
+	content:"“";
+	float:left;
+	margin-top:0.25em;
+	margin-right:0.25em;
+}
+blockquote::after {
+	content:"”";
+	float:right;
+	margin-left:0.25em;
+	margin-top:-1em;
+}
+small {
+	font-size:0.8em;
+}
+small span:first-of-type:only-of-type {
+	display:inline-block;
+	transform:rotateZ(180deg);
+	vertical-align:-0.15em;
+}
+a {
+	color:hsl(20,80%,20%);
+	text-decoration:none;
+}
+a:hover, a:focus {
+	color:hsl(20,80%,40%);
+	text-decoration:underline;
+}
+img + br {
+	display:none;
+}
+
+/* 共通box */
+main {
+	display:block;
+}
+	/* 主内容内のsection、article、もしくはaside要素で、.exceptが付与されていないもの */
+	main > section > section:not(.except), main > section > article:not(.except), main > section > aside:not(.except) {
+		position:relative;
+		overflow:visible;
+		width:45%;
+		min-height:calc((960px * 0.45) + 2.4em + 4px + 1px + 1.5em); /* 画像の高さ（960px * 0.45） + 行間を含むh3要素の高さ + h3要素のpadding-bottom + h3要素の下線の高さ + ｐ要素の上下段落間隔。ただし、当該要素がoverflow:visibleになっており、h3要素のmargin-topがボックスの高さに反映されていないことが前提 */
+	}
+	main > section > section:not(.except):nth-of-type(odd), main > section > article:not(.except):nth-of-type(odd), main > section > aside:not(.except):nth-of-type(odd) {
+		margin-left:96px;
+	}
+	main > section > section:not(.except):nth-of-type(even), main > section > article:not(.except):nth-of-type(even), main > section > aside:not(.except):nth-of-type(even) {
+		margin-left:auto;
+		margin-right:96px;
+	}
+	main > section > *:not(.except) > h3 {
+		position:relative;
+		width:200%;
+	}
+	main > section > *:not(.except) > h3::before {
+		content:"";
+		display:block;
+		position:absolute;
+		left:0px;
+		bottom:0px;
+		width:100%;
+		height:1px;
+	}
+	main > section > *:not(.except):nth-of-type(odd) > h3::before {
+		background-image:linear-gradient(
+			to right,
+			hsl(20,80%,20%) 0%,
+			hsl(20,0%,100%) 95%
+		);
+	}
+	main > section > *:not(.except):nth-of-type(even) > h3 {
+		right:100%;
+		text-align:right;
+	}
+	main > section > *:not(.except):nth-of-type(even) > h3::before {
+		background-image:linear-gradient(
+			to left,
+			hsl(20,80%,20%) 0%,
+			hsl(20,0%,100%) 95%
+		);
+	}
+	main > section > *:not(.except) > * > img {
+		position:absolute;
+		bottom:0.5em;
+		width:100%;
+		height:auto;
+		border-radius:8px;
+		box-shadow:0px 8px 16px 0px rgba(0,0,0,0.2);
+	}
+	main > section > *:not(.except):nth-of-type(odd) > * > img {
+		left:calc(100% + 64px);
+	}
+	main > section > *:not(.except):nth-of-type(even) > * > img {
+		left:calc(-100% - 64px);
+	}
+		/* 画面幅1120px以下 */
+		@media screen and (max-width:1120px) {
+			main > section > section:not(.except), main > section > article:not(.except), main > section > aside:not(.except) {
+				width:auto;
+				min-height:auto;
+			}
+			main > section > section:not(.except):nth-of-type(odd), main > section > article:not(.except):nth-of-type(odd), main > section > aside:not(.except):nth-of-type(odd) {
+				margin-left:0%;
+			}
+			main > section > section:not(.except):nth-of-type(even), main > section > article:not(.except):nth-of-type(even), main > section > aside:not(.except):nth-of-type(even) {
+				margin-left:0%;
+				margin-right:0%;
+			}
+			main > section > *:not(.except) > h3 {
+				width:100%;
+			}
+			main > section > *:not(.except):nth-of-type(even) > h3 {
+				right:0%;
+				text-align:left;
+			}
+			main > section > *:not(.except):nth-of-type(even) > h3::before {
+				background-image:linear-gradient(
+					to right,
+					hsl(20,80%,20%) 0%,
+					hsl(20,0%,100%) 95%
+				);
+			}
+			main > section > *:not(.except) > * > img {
+				position:static;
+				width:40%;
+				height:auto;
+				margin-top:0.5em;
+				margin-bottom:0.5em;
+			}
+			main > section > *:not(.except):nth-of-type(odd) > * > img {
+				float:right;
+				margin-left:2em;
+			}
+			main > section > *:not(.except):nth-of-type(even) > * > img {
+				float:left;
+				margin-right:2em;
+			}
+		}
+	/* .exceptが付与されたaside要素 */
+	main > section > aside.except {
+		margin-top:6rem;
+		padding:4rem 2rem 1rem;
+		border:1px solid hsl(20,80%,20%);
+		border-radius:4px;
+		background-color:hsl(40,40%,90%);
+		background-image:repeating-linear-gradient(
+			to bottom,
+			hsla(40,40%,80%,0) 0px,
+			hsla(40,40%,80%,0) 3px,
+			hsla(40,40%,80%,0.8) 3px,
+			hsla(40,40%,80%,0.8) 4px
+		);
+		text-shadow:
+			0px 0px 2px hsla(20,80%,20%,0.2),
+			0px 0px 4px hsla(20,80%,20%,0.2),
+			0px 0px 16px hsla(20,80%,20%,0.2),
+			0px 0px 32px hsla(20,80%,20%,0.2);
+	}
+	main > section > aside.except > h3 {
+		margin-top:0em;
+	}
+	main > section > aside.except cite {
+		display:block;
+		position:absolute;
+		left:0px;
+		top:0px;
+		max-width:90%;
+		border-bottom:1px solid hsl(20,80%,20%);
+		border-right:1px solid hsl(20,80%,20%);
+		border-radius:0px 0px 4px 0px;
+		background-color:rgba(255,255,255,0.6);
+		transform:skewX(-15deg);
+		transform-origin:left top;
+		font-style:normal;
+		line-height:1.3em;
+	}
+	main > section > aside.except cite a {
+		display:inline-block;
+		padding:0.25em 1em 0.25em 1.5em;
+		transform:skewX(15deg);
+	}
+	/* 戻る */
+	.back {
+		clear:both;
+		text-align:right;
+	}
+	.back a {
+		display:inline-flex;
+		justify-content:center;
+		align-items:center;
+		width:10em;
+		height:10em;
+		border-radius:10em;
+		border:1px solid hsl(20,80%,20%);
+		background-color:rgb(255,255,255);
+		overflow:hidden;
+		font-weight:bold;
+		transition-property:border-color, background-color, color;
+		transition-duration:0.5s;
+	}
+	.back a:hover, .back a:focus {
+		border-color:hsl(20,80%,40%);
+		background-color:hsl(40,40%,90%);
+	}
+/* ページフッタ */
+body > footer {
+	font-size:0.9em;
+	text-align:center;
+}
+body > footer img {
+	width:15%;
+	max-width:192px;
+	min-width:128px;
+	height:auto;
+}
+body > footer ul {
+	margin-top:0px;
+}
+body > footer > ul > li:first-of-type {
+	padding:1rem 0px 0.5rem;
+	background-color:hsl(40,40%,90%);
+}
+body > footer > ul > li:last-of-type {
+	margin-top:1rem;
+}
+body > footer li li {
+	display:inline;
+	padding-left:0.5em;
+	padding-right:0.5em;
+}
+body > footer li li:not(:first-child) {
+	border-left:1px solid hsl(20,80%,20%);
+}
