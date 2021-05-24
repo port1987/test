@@ -91,7 +91,7 @@ Private Sub cmd_exl_exp_Click()
     colnum = months + 4
 
     to_ym = Right(to_ym, 2)
-    with oxls.worksheets("mlit")
+    With oxls.worksheets("mlit")
         .Cells(rownum, colnum).Value = to_ym & "月"
         .Cells((rownum + 14), colnum).Value = to_ym & "月"
         .Cells((rownum + 1), (months * 2 + 11)).Value = to_ym & "月"
@@ -100,7 +100,7 @@ Private Sub cmd_exl_exp_Click()
             'フィルハンドル操作(金額表、作業用の表)
             Do Until (rownum = 26)
                 .Cells(rownum, colnum).AutoFill( _
-                Destination:=oxls.worksheets("mlit").Range(.Cells(rownum, colnum), .Cells(rownum, (colnum - months + 1))))
+                Destination:=.Range(.Cells(rownum, colnum), .Cells(rownum, (colnum - months + 1))))
                 rownum = rownum + 1
 
                 If rownum = 13 Then
@@ -161,5 +161,5 @@ End Sub
     Loop
 
     rs = Nothing
-    SETKENSU = True
+    SETNUM = True
 End Function
