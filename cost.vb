@@ -74,7 +74,7 @@ Private Sub cmd_exl_exp_Click()
             stsql = stsql & "And (tstdbt_i16_mlit.i16_length > '1'))) "
             stsql = stsql & "GROUP BY tstdbt_i16_mlit.i16_center_cd "
 
-        If SETKENSU(stsql, oxls, DB, rownum, colnum) = True And tstChk = 0 Then
+        If SETNUM(stsql, oxls, DB, rownum, colnum) = True And tstChk = 0 Then
             tstChk = tstChk + 1
         End If
 
@@ -91,7 +91,7 @@ Private Sub cmd_exl_exp_Click()
     colnum = months + 4
 
     to_ym = Right(to_ym, 2)
-
+    with oxls.worksheets("mMlit")
     oxls.worksheets("mlit").Cells(rownum, colnum).Value = to_ym & "月"
     oxls.worksheets("mlit").Cells((rownum + 14), colnum).Value = to_ym & "月"
     oxls.worksheets("mlit").Cells((rownum + 1), (months * 2 + 11)).Value = to_ym & "月"
@@ -123,7 +123,7 @@ Private Sub cmd_exl_exp_Click()
 
     oxls.worksheets("mlit").Columns("D").Delete()
     oxls.worksheets("mlit").Columns(10 + months).Delete()
-
+        End With
     If tstChk = 0 Then
         Call MsgBox("テスト対象データ無しでした。", vbOKOnly)
     End If
@@ -142,7 +142,7 @@ End Sub
     If rs.EOF Then
         rs.Close()
         rs = Nothing
-        SETKENSU = False
+        SETNUM = False
         Exit Function
     End If
 
