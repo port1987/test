@@ -91,39 +91,39 @@ Private Sub cmd_exl_exp_Click()
     colnum = months + 4
 
     to_ym = Right(to_ym, 2)
-    with oxls.worksheets("mMlit")
-    oxls.worksheets("mlit").Cells(rownum, colnum).Value = to_ym & "月"
-    oxls.worksheets("mlit").Cells((rownum + 14), colnum).Value = to_ym & "月"
-    oxls.worksheets("mlit").Cells((rownum + 1), (months * 2 + 11)).Value = to_ym & "月"
+    with oxls.worksheets("mlit")
+        .Cells(rownum, colnum).Value = to_ym & "月"
+        .Cells((rownum + 14), colnum).Value = to_ym & "月"
+        .Cells((rownum + 1), (months * 2 + 11)).Value = to_ym & "月"
 
-    If months > 1 Then
-        'フィルハンドル操作(金額表、作業用の表)
-        Do Until (rownum = 26)
-            oxls.worksheets("mlit").Cells(rownum, colnum).AutoFill( _
-            Destination:=oxls.worksheets("mlit").Range(oxls.worksheets("mlit").Cells(rownum, colnum), oxls.worksheets("mlit").Cells(rownum, (colnum - months + 1))))
-            rownum = rownum + 1
+        If months > 1 Then
+            'フィルハンドル操作(金額表、作業用の表)
+            Do Until (rownum = 26)
+                .Cells(rownum, colnum).AutoFill( _
+                Destination:=oxls.worksheets("mlit").Range(.Cells(rownum, colnum), .Cells(rownum, (colnum - months + 1))))
+                rownum = rownum + 1
 
-            If rownum = 13 Then
-                rownum = rownum + 4
-            ElseIf rownum = 18 Then
-                rownum = rownum + 6
-            End If
-        Loop
-        'フィルハンドル操作(件数表)
-        rownum = 4
-        colnum = months * 2 + 11
-        Do Until (rownum = 10)
-            oxls.worksheets("mlit").Cells(rownum, colnum).AutoFill( _
-            Destination:=oxls.worksheets("mlit").Range(oxls.worksheets("mlit").Cells(rownum, colnum), oxls.worksheets("mlit").Cells(rownum, (colnum - months + 1))))
-            rownum = rownum + 1
-        Loop
-    End If
+                If rownum = 13 Then
+                    rownum = rownum + 4
+                ElseIf rownum = 18 Then
+                    rownum = rownum + 6
+                End If
+            Loop
+            'フィルハンドル操作(件数表)
+            rownum = 4
+            colnum = months * 2 + 11
+            Do Until (rownum = 10)
+                .Cells(rownum, colnum).AutoFill( _
+                Destination:=.Range(.Cells(rownum, colnum), .Cells(rownum, (colnum - months + 1))))
+                rownum = rownum + 1
+            Loop
+        End If
 
-    oxls.worksheets("mlit").Range("B2").Value = "mlit　支店別費用配布 " & [Forms]![form1]![txt_from_ym] & " ～ " & [Forms]![form1]![txt_to_ym] & " 分"
+        .Range("B2").Value = "mlit　支店別費用配布 " & [Forms]![form1]![txt_from_ym] & " ～ " & [Forms]![form1]![txt_to_ym] & " 分"
 
-    oxls.worksheets("mlit").Columns("D").Delete()
-    oxls.worksheets("mlit").Columns(10 + months).Delete()
-        End With
+        .Columns("D").Delete()
+        .Columns(10 + months).Delete()
+    End With
     If tstChk = 0 Then
         Call MsgBox("テスト対象データ無しでした。", vbOKOnly)
     End If
